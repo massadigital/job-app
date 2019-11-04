@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JobApp.Common\JobApp.Common.csproj" />
+    <ProjectReference Include="..\JobApp.Domain.Models\JobApp.Domain.Models.csproj" />
+  </ItemGroup>
+
+</Project>
