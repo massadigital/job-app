@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+dl.detail-view {
+  margin: 0px;
+  dt {
+    font-size: 0.84em;
+    font-style: italic;
+    display: block;
+    color: #3b3b3b;
+  }
+  dd {
+    margin: 0px;
+    display: block;
+    padding-bottom: 0.5em;
+    color: #000000;
+  }
+}
+.detail-table {
+  border-collapse: collapse;
+  th {
+    font-size: 0.9em;
+    border-bottom: 1px solid #3b3b3b;
+  }
+  td {
+    padding: 0.4em 0.2em;
+    font-size: 0.9em;
+    border-bottom: 1px solid #a1a1a1;
+  }
+  .right-align {
+    text-align: right;
+  }
+}

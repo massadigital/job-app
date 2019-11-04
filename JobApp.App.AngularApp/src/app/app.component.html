@@ -1,0 +1,35 @@
+<mat-toolbar color="primary" class="main-toolbar">
+  <mat-toolbar-row>
+    <button mat-icon-button (click)="showMenuText =!showMenuText">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1>Job App</h1>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-drawer-container autosize>
+  <mat-drawer #drawer mode="side" opened="true">
+    <nav class="nav-menu">
+      <ul>
+        <li> <a mat-button class="btn" routerLink="/primeira-atividade" routerLinkActive="active">
+            <mat-icon>menu</mat-icon><span *ngIf="showMenuText">Primeira Atividade</span>
+          </a>
+        </li>
+        <li> <a mat-button class="btn" routerLink="/github-users" routerLinkActive="active">
+            <mat-icon>youtube_searched_for</mat-icon><span *ngIf="showMenuText">Usuários GitHub</span>
+          </a>
+        </li>
+        <li> <a mat-button class="btn" routerLink="/pessoas" routerLinkActive="active">
+            <mat-icon>youtube_searched_for</mat-icon><span *ngIf="showMenuText">Pessoas</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+  </mat-drawer>
+  <mat-drawer-content>
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-drawer-content>
+</mat-drawer-container>

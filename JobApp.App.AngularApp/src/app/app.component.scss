@@ -1,0 +1,33 @@
+.main-toolbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.main-content {
+  min-height: 100vh;
+  padding: 80px 3rem 2rem;
+}
+.menu-toolbar {
+  flex-direction: row-reverse;
+}
+.nav-menu {
+  min-height: 100vh;
+  padding: 80px 0px 0px 0px;
+  .btn {
+    border-radius: 0px;
+    font-size: 1.2em;
+    .mat-icon {
+      margin-left: 0.5em;
+      margin-right: 0.5em;
+    }
+  }
+  ul {
+    padding: 0px;
+    margin: 0px;
+    list-style-type: none;
+  }
+}

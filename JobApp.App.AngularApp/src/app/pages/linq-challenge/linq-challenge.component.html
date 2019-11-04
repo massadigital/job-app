@@ -1,0 +1,18 @@
+<h1>Primeira Atividade</h1>
+<mat-tab-group dynamicHeight (selectedTabChange)="selectedTabChange($event)">
+    <mat-tab label="Tarefa 1">
+        <div [innerHtml]="tabs[0].data || 'Loading...' " class="tab-content">
+           {{tabs[0].data || 'Loading...' }} 
+        </div>
+    </mat-tab>
+    <mat-tab label="Tarefa 2">
+        <div [innerHtml]="tabs[1].data || 'Loading...' " class="tab-content">
+            {{tabs[1].data || 'Loading...' }} 
+        </div>
+    </mat-tab>
+    <mat-tab label="Tarefa 3">
+        <div [innerHtml]="tabs[2].data || 'Loading...' " class="tab-content">
+            
+        </div>
+    </mat-tab>
+</mat-tab-group>
