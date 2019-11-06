@@ -15,24 +15,18 @@ namespace JobApp.Domain.Services
         {
             min = Math.Max(Math.Abs(min), 1);
 
-            max = Math.Max(Math.Abs(max), min);
+            max = Math.Max(Math.Abs(max), min) + 1;
 
-            var result = (new int[max - (min - 1)]).Select(e =>
-            {
-                var value = new List<int>() { max-- };
-                while (value.Last() > 1)
-                {
-                    if (value.Last() % 2 == 0)
-                    {
-                        value.Add(value.Last() / 2);
-                    }
-                    else
-                    {
-                        value.Add((value.Last() * 3) + 1);
-                    }
-                }
-                return value.ToArray();
-            }).OrderByDescending(e => e.Length);
+            var result = ParallelEnumerable.Range(min, max - min).Select(e =>
+               {
+                   var value = new List<int>() { e };
+                   while (e > 1)
+                   {
+                       e = e % 2 == 0 ? (e / 2) : ((e * 3) + 1);
+                       value.Add(e);
+                   }
+                   return value.ToArray();
+               }).OrderByDescending(e => e.Length);
 
             return result.ToArray();
         }
