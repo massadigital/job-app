@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace JobApp.Common.Data
 {
-    public class DataResult<T> : DataQuery<T>
+    public class DataResult<T>
     {
+        public DataQuery<T> Query { get; set; } = new DataQuery<T>();
         public DataResult()
         {
             Items = (new List<T>()).AsQueryable();
@@ -15,10 +16,8 @@ namespace JobApp.Common.Data
         public DataResult(DataQuery<T> query)
         {
             Items = (new List<T>()).AsQueryable();
-            SortExpressions = query.SortExpressions.ToList();
-            FilterExpressions = query.FilterExpressions.ToList();
-            Pagination = query.Pagination;
+            Query = query;
         }
-        public IQueryable<T> Items { get; set; }
+        public IQueryable<T> Items { get; set; } = (new T[] { }).AsQueryable();
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace JobApp.Data.Migrations
+namespace JobApp.Data.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -107,13 +107,12 @@
                         PERSON_CLAIM_ID = c.Long(nullable: false),
                         CLAIM_PERSON_ID = c.Long(nullable: false),
                         PERSON_HAS_CLAIM_SINCE = c.DateTime(nullable: false),
-                        Person_PersonId = c.Long(),
                     })
                 .PrimaryKey(t => new { t.PERSON_CLAIM_ID, t.CLAIM_PERSON_ID, t.PERSON_HAS_CLAIM_SINCE })
                 .ForeignKey("dbo.CLAIM", t => t.PERSON_CLAIM_ID)
-                .ForeignKey("dbo.PERSON", t => t.Person_PersonId)
+                .ForeignKey("dbo.PERSON", t => t.CLAIM_PERSON_ID)
                 .Index(t => t.PERSON_CLAIM_ID)
-                .Index(t => t.Person_PersonId);
+                .Index(t => t.CLAIM_PERSON_ID);
             
             CreateTable(
                 "dbo.PERSON",
@@ -152,10 +151,10 @@
             DropForeignKey("dbo.JOB_HAS_CLAIM", "CLAIM_JOB_ID", "dbo.JOB");
             DropForeignKey("dbo.JOB_HAS_CLAIM", "JOB_CLAIM_ID", "dbo.CLAIM");
             DropForeignKey("dbo.CLAIM", "CLAIM_SKILL_ID", "dbo.SKILL");
-            DropForeignKey("dbo.PERSON_HAS_CLAIM", "Person_PersonId", "dbo.PERSON");
+            DropForeignKey("dbo.PERSON_HAS_CLAIM", "CLAIM_PERSON_ID", "dbo.PERSON");
             DropForeignKey("dbo.PERSON_HAS_CLAIM", "PERSON_CLAIM_ID", "dbo.CLAIM");
             DropForeignKey("dbo.CLAIM", "CLAIM_LEVEL_ID", "dbo.LEVEL");
-            DropIndex("dbo.PERSON_HAS_CLAIM", new[] { "Person_PersonId" });
+            DropIndex("dbo.PERSON_HAS_CLAIM", new[] { "CLAIM_PERSON_ID" });
             DropIndex("dbo.PERSON_HAS_CLAIM", new[] { "PERSON_CLAIM_ID" });
             DropIndex("dbo.CLAIM", new[] { "CLAIM_LEVEL_ID" });
             DropIndex("dbo.CLAIM", new[] { "CLAIM_SKILL_ID" });

@@ -10,7 +10,8 @@ export class PersonService {
   constructor(private http: HttpClient, @Inject('BUSINESS_API_URL') private apiUrl: string) { }
   listPersons(): Promise<DataResult<any>> {
     return new Promise<DataResult<any>>((resolve, reject) => {
-      this.http.get<any[]>(this.apiUrl + "/person/list").subscribe(result => {
+      const queryParams = { page: "1", pageSize: "10", sort: "Id", sortDirection:"1", filterData: "" };
+      this.http.get<any[]>(this.apiUrl + "/person/list", { params: queryParams }).subscribe(result => {
         const pagination: Pagination = { ItemCount: 0, PageCount: 0, PageNumber: 0, PageSize: 0 };
         let resultModel: DataResult<any> = {
           FilterExpressions: [],

@@ -32,6 +32,13 @@ namespace JobApp.App.WebApi
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            config.Routes.MapHttpRoute(
+                name: "BrowseDataEndPoint",
+                routeTemplate: "api/{controller}/{action}/{page}/{pageSize}/{sort}/{sortDirection}/{filterData}",
+                defaults: new { page = RouteParameter.Optional, pageSize = RouteParameter.Optional, sort = RouteParameter.Optional, sortDirection = RouteParameter.Optional, filterData = RouteParameter.Optional }
+            );
+
+            //int page, int pageSize, string sortData, string filterData
         }
     }
 }

@@ -13,6 +13,8 @@ using SimpleMapper.Core;
 using JobApp.App.Core.Models;
 using JobApp.Domain.Models;
 using JobApp.Common.Data;
+using AutoMapper;
+using AutoMapper.Configuration;
 
 namespace JobApp.App.Core.DependencyInjection
 {
@@ -20,11 +22,9 @@ namespace JobApp.App.Core.DependencyInjection
     {
         public static void Configure(IUnityContainer container)
         {
-            container.RegisterType<IMapper<PersonApp, Person>, PersonAppMap>(new HierarchicalLifetimeManager());
-            container.RegisterType<IMapper<Person, PersonApp>, PersonMap>(new HierarchicalLifetimeManager());
-            container.RegisterType<IMapper<DataQuery<Person>, DataQuery<PersonApp>>, PersonDataQueryMap>(new HierarchicalLifetimeManager());
-            container.RegisterType<IMapper<DataQuery<PersonApp>, DataQuery<Person>>, PersonAppDataQueryMap>(new HierarchicalLifetimeManager());
-            container.RegisterType<IMapper<DataResult<Person>, DataResult<PersonApp>>, PersonDataResultMap>(new HierarchicalLifetimeManager());
+            var mapper = MapConfiguration.Create();
+
+            container.RegisterInstance(mapper);
         }
     }
 }

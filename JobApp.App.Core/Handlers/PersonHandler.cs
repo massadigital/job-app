@@ -1,4 +1,5 @@
-﻿using JobApp.App.Core.Interfaces.Handlers;
+﻿using AutoMapper;
+using JobApp.App.Core.Interfaces.Handlers;
 using JobApp.App.Core.Models;
 using JobApp.Common.Business;
 using JobApp.Common.Data;
@@ -16,30 +17,18 @@ namespace JobApp.App.Core.Handlers
     public class PersonHandler : IPersonHandler
     {
         protected IPersonService PersonService { get; }
-        protected IMapper<PersonApp, Person> PersonAppMap { get; }
-        protected IMapper<Person, PersonApp> PersonMap { get; }
-        protected IMapper<DataQuery<Person>, DataQuery<PersonApp>> PersonDataQueryMap { get; }
-        protected IMapper<DataQuery<PersonApp>, DataQuery<Person>> PersonAppDataQueryMap { get; }
-        protected IMapper<DataResult<Person>, DataResult<PersonApp>> PersonDataResultMap { get; }
+        protected IMapper Mapper { get; }
         public PersonHandler(
-                IPersonService personService,
-                IMapper<PersonApp, Person> personAppMap,
-                IMapper<Person, PersonApp> personMap,
-                IMapper<DataQuery<PersonApp>, DataQuery<Person>> personAppDataQueryMap,
-                IMapper<DataQuery<Person>, DataQuery<PersonApp>> personDataQueryMap,
-                IMapper<DataResult<Person>, DataResult<PersonApp>> personDataResultMap)
+                 IPersonService personService,
+                 IMapper mapper)
         {
             PersonService = personService;
-            PersonAppMap = personAppMap;
-            PersonMap = personMap;
-            PersonAppDataQueryMap = personAppDataQueryMap;
-            PersonDataQueryMap = personDataQueryMap;
-            PersonDataResultMap = personDataResultMap;
+            Mapper = mapper;
         }
 
         public async Task<BusinessResult<long>> Add(PersonApp instance)
         {
-            var domainModel = PersonAppMap.Map(instance);
+            var domainModel = Mapper.Map<Person>(instance);
 
             var domainResult = await PersonService.Add(domainModel);
 
@@ -57,7 +46,7 @@ namespace JobApp.App.Core.Handlers
 
             var domainResult = await PersonService.Get(id);
 
-            var resultValue = PersonMap.Map(domainResult);
+            var resultValue = Mapper.Map<PersonApp>(domainResult);
 
             var result = new BusinessResult<PersonApp>()
             {
@@ -79,14 +68,25 @@ namespace JobApp.App.Core.Handlers
 
         public async Task<BusinessResult<DataResult<PersonApp>>> Query(DataQuery<PersonApp> query)
         {
-            var domainQuery = PersonAppDataQueryMap.Map(query);
+            if (!query.SortExpressions.Any())
+            {
+                query.SortExpressions.Add(new SortExpression("Id"));
+            }
+
+            var domainQuery = Mapper.Map<DataQuery<Person>>(query);
+
             var domainResult = await PersonService.Query(domainQuery);
-            var resultModel = PersonDataResultMap.Map(domainResult);
+
+            var resultModel = Mapper.Map<DataResult<PersonApp>>(domainResult);
+
+            resultModel.Items = domainResult.Items.ProjectToQueryable<PersonApp>(Mapper.ConfigurationProvider);
+
             var result = new BusinessResult<DataResult<PersonApp>>()
             {
                 Success = resultModel != null,
                 Value = resultModel
             };
+
 
             return result;
         }

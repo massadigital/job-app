@@ -1,5 +1,6 @@
 ﻿using JobApp.App.Core.Interfaces.Handlers;
 using JobApp.App.Core.Models;
+using JobApp.Common.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +19,19 @@ namespace JobApp.App.WebApi.Controllers
             PersonHandler = personHandler;
         }
         [HttpGet]
-        public async Task<IHttpActionResult> List()
+        public async Task<HttpResponseMessage> List(int page, int pageSize, string sort, int sortDirection, string filterData)
         {
-            var result = await PersonHandler.Query(new Common.Data.DataQuery<Core.Models.PersonApp>());
+            var query = DataQuery<PersonApp>.Create(page, pageSize, sort, sortDirection, filterData);
 
-            return Ok(result.Value.Items);
+            var result = await PersonHandler.Query(query);
+
+            var responseBody = result.Value.Items;
+
+            var response = Request.CreateResponse(HttpStatusCode.OK, responseBody);
+
+            Helpers.DataResultHelper.GetHeaders(result.Value.Query).ToList().ForEach(e => response.Headers.Add(e.Key, e.Value));
+
+            return response;
         }
         [HttpGet]
         public async Task<IHttpActionResult> Get(long id)

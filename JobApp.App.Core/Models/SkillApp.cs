@@ -9,6 +9,6 @@ namespace JobApp.App.Core.Models
     public class SkillApp
     {
         public long Id { get; set; }
-        public long Name { get; set; }
+        public string Name { get; set; }
     }
 }

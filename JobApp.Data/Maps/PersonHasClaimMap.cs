@@ -16,7 +16,7 @@ namespace JobApp.Data.Maps
         {
             ToTable("PERSON_HAS_CLAIM");
 
-            HasKey(e => new { e.PersonClaimId, e.ClaimPersonId, e.PersonHasClaimSince }) ;
+            HasKey(e => new { e.PersonClaimId, e.ClaimPersonId, e.PersonHasClaimSince });
 
 
             Property(e => e.PersonClaimId)
@@ -35,6 +35,11 @@ namespace JobApp.Data.Maps
             HasRequired(e => e.Claim)
                         .WithMany(e => e.PersonHasClaims)
                         .HasForeignKey(e => e.PersonClaimId)
+                        .WillCascadeOnDelete(false);
+
+            HasRequired(e => e.Person)
+                        .WithMany(e => e.PersonHasClaims)
+                        .HasForeignKey(e => e.ClaimPersonId)
                         .WillCascadeOnDelete(false);
         }
     }

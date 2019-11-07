@@ -8,6 +8,8 @@ namespace JobApp.Common.Data
     {
         private int pageNumber = 1;
         private int pageSize = 10;
+
+        public int Skip { get => PageSize * (PageNumber - 1); }
         public int PageNumber
         {
             get => pageNumber;

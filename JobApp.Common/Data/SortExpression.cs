@@ -16,6 +16,10 @@ namespace JobApp.Common.Data
             Direction = direction;
             Expression = attribute;
         }
+        public SortExpression(string attribute)
+        {
+            Expression = attribute;
+        }
         public SortExpression(object direction, string attribute)
         {
             Direction = (SortDirection)Enum.Parse(typeof(SortDirection), direction.ToString());
